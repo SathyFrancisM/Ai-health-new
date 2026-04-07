@@ -8,7 +8,9 @@ import { AvatarCanvas } from "@/components/canvas/AvatarCanvas"
 import { ChatContainer } from "@/components/chat/ChatContainer"
 import { HospitalPortal } from "@/components/portals/HospitalPortal"
 import { DoctorPortal } from "@/components/portals/DoctorPortal"
-import { Heart, ShieldCheck, Activity, Stethoscope, ArrowLeft } from "lucide-react"
+import { NetworkList } from "@/components/portals/NetworkList"
+import { ReceiptList } from "@/components/portals/ReceiptList"
+import { Heart, ShieldCheck, Activity, Stethoscope, ArrowLeft, MapPin } from "lucide-react"
 
 export default function Home() {
   const [view, setView] = useState<"login" | "signup" | "onboarding" | "dashboard" | "consultation" | "hospitals" | "doctors">("login");
@@ -17,6 +19,7 @@ export default function Home() {
   const [registrationData, setRegistrationData] = useState<any>(null);
 
   const [detectedLocation, setDetectedLocation] = useState<string>("Detecting...");
+  const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   const triggerEmergency = async (type: "Manual" | "Auto", summary?: string) => {
     const EMERGENCY_NUMBER = "8778741264";
@@ -80,7 +83,13 @@ ${summary || "No specific conversation summary available"}
 
   const handleOnboardingComplete = async (healthData: any) => {
     try {
-      const fullData = { ...registrationData, ...healthData };
+      const fullData = { 
+        ...registrationData, 
+        ...healthData, 
+        location: detectedLocation,
+        lat: gpsCoords?.lat || null,
+        lng: gpsCoords?.lng || null
+      };
       const response = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -122,7 +131,8 @@ ${summary || "No specific conversation summary available"}
           <motion.div key="login" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
             <LoginForm 
               onToggle={() => setView("signup")} 
-              onLocationDetect={(loc) => setDetectedLocation(loc)} 
+              onLocationDetect={(loc) => setDetectedLocation(loc)}
+              onGpsDetect={(coords) => setGpsCoords(coords)}
               onLogin={handleLogin}
             />
           </motion.div>
@@ -149,42 +159,62 @@ ${summary || "No specific conversation summary available"}
           >
             <div className="text-center mb-12">
                <h1 className="text-5xl font-bold text-slate-800 mb-4">Hello, <span className="text-gradient">{user?.name || "Advait"}</span></h1>
-               <p className="text-slate-500 text-lg">Your AI Health Assistant is ready to help you.</p>
+               <p className="text-slate-500 text-lg">
+                 {user?.role === 'Doctor' ? "Doctor Dashboard - Ready to assist nearby users." : 
+                  user?.role === 'Hospital' ? "Hospital Reception - Manage incoming emergency alerts." : 
+                  "Your AI Health Assistant is ready to help you."}
+               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full px-4">
-               <div 
-                 onClick={() => setView("consultation")}
-                 className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-teal-100"
-               >
-                  <div className="bg-teal-100 p-4 rounded-2xl w-fit mx-auto"><Activity className="text-teal-600 h-8 w-8" /></div>
-                  <h3 className="text-xl font-bold">Start Consultation</h3>
-                  <p className="text-slate-500 text-sm">Chat with MediGuide for instant Indian home remedies.</p>
-               </div>
-               <div 
-                 onClick={() => setView("doctors")}
-                 className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-cyan-100"
-               >
-                  <div className="bg-cyan-100 p-4 rounded-2xl w-fit mx-auto"><Stethoscope className="text-cyan-600 h-8 w-8" /></div>
-                  <h3 className="text-xl font-bold">Find Doctors</h3>
-                  <p className="text-slate-500 text-sm">Browse specialist listings and book appointments.</p>
-               </div>
-               <div 
-                 onClick={() => setView("hospitals")}
-                 className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-blue-100"
-               >
-                  <div className="bg-blue-100 p-4 rounded-2xl w-fit mx-auto"><ShieldCheck className="text-blue-600 h-8 w-8" /></div>
-                  <h3 className="text-xl font-bold">Hospitals</h3>
-                  <p className="text-slate-500 text-sm">Locate nearby care facilities and emergency services.</p>
-               </div>
-            </div>
+            {(!user?.role || user?.role === 'User') && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full px-4">
+                 <div 
+                   onClick={() => setView("consultation")}
+                   className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-teal-100"
+                 >
+                    <div className="bg-teal-100 p-4 rounded-2xl w-fit mx-auto"><Activity className="text-teal-600 h-8 w-8" /></div>
+                    <h3 className="text-xl font-bold">Start Consultation</h3>
+                    <p className="text-slate-500 text-sm">Chat with MediGuide for instant Indian home remedies.</p>
+                 </div>
+                 <div 
+                   onClick={() => setView("doctors")}
+                   className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-cyan-100"
+                 >
+                    <div className="bg-cyan-100 p-4 rounded-2xl w-fit mx-auto"><Stethoscope className="text-cyan-600 h-8 w-8" /></div>
+                    <h3 className="text-xl font-bold">Find Doctors</h3>
+                    <p className="text-slate-500 text-sm">Browse specialist listings and book appointments.</p>
+                 </div>
+                 <div 
+                   onClick={() => setView("hospitals")}
+                   className="glass p-8 rounded-3xl text-center space-y-4 hover:scale-[1.02] transition-transform cursor-pointer border border-blue-100"
+                 >
+                    <div className="bg-blue-100 p-4 rounded-2xl w-fit mx-auto"><ShieldCheck className="text-blue-600 h-8 w-8" /></div>
+                    <h3 className="text-xl font-bold">Hospitals</h3>
+                    <p className="text-slate-500 text-sm">Locate nearby care facilities and emergency services.</p>
+                 </div>
+                 
+                 <div className="col-span-1 md:col-span-3 flex justify-center mt-8">
+                    <button 
+                      onClick={() => triggerEmergency("Manual")}
+                      className="bg-red-500 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 shadow-2xl shadow-red-500/40 hover:bg-red-600 transition-colors animate-float"
+                    >
+                       <span className="text-2xl">🚨</span> SEND EMERGENCY ALERT
+                    </button>
+                 </div>
+              </div>
+            )}
 
-            <button 
-              onClick={() => triggerEmergency("Manual")}
-              className="mt-12 bg-red-500 text-white px-10 py-4 rounded-2xl font-bold flex items-center gap-3 shadow-2xl shadow-red-500/40 hover:bg-red-600 transition-colors animate-float"
-            >
-               <span className="text-2xl">🚨</span> SEND EMERGENCY ALERT
-            </button>
+            {(user?.role === 'Doctor' || user?.role === 'Hospital') && (
+              <div className="w-full px-4 max-w-4xl">
+                 <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100">
+                    <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                       <MapPin className="text-teal-500" /> Appointments & Receipts
+                    </h3>
+                    <ReceiptList user={user} />
+                 </div>
+              </div>
+            )}
+
           </motion.div>
         )}
 
@@ -226,13 +256,13 @@ ${summary || "No specific conversation summary available"}
 
         {view === "hospitals" && (
           <motion.div key="hospitals" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="w-full flex justify-center">
-            <HospitalPortal onBack={() => setView("dashboard")} />
+            <HospitalPortal user={user} gpsCoords={gpsCoords} onBack={() => setView("dashboard")} />
           </motion.div>
         )}
 
         {view === "doctors" && (
           <motion.div key="doctors" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="w-full flex justify-center">
-            <DoctorPortal onBack={() => setView("dashboard")} />
+            <DoctorPortal user={user} gpsCoords={gpsCoords} onBack={() => setView("dashboard")} />
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Search, MapPin, Phone, Star, ArrowRight, UserCircle, Stethoscope, Video, Calendar } from "lucide-react"
+import { PaymentModal } from "./PaymentModal"
 
 const DOCTORS = [
   { id: 1, name: "Dr. Arvind Swaminathan", specialty: "Cardiologist", experience: "15+ Years", rating: 4.9, fees: "₹800", location: "T. Nagar, Chennai", online: true },
@@ -11,16 +12,48 @@ const DOCTORS = [
   { id: 4, name: "Dr. Meera Iyer", specialty: "Pediatrician", experience: "12+ Years", rating: 4.9, fees: "₹700", location: "Anna Nagar, Chennai", online: true },
 ];
 
-export function DoctorPortal({ onBack }: { onBack: () => void }) {
+export function DoctorPortal({ user, gpsCoords, onBack }: { user: any, gpsCoords?: { lat: number; lng: number } | null, onBack: () => void }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [doctors, setDoctors] = useState<any[]>([]);
+  const [selectedDoctor, setSelectedDoctor] = useState<any>(null);
 
-  const filteredDoctors = DOCTORS.filter(d => 
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const gpsQuery = gpsCoords ? `&lat=${gpsCoords.lat}&lng=${gpsCoords.lng}` : '';
+        const response = await fetch(`http://localhost:5000/api/auth/network?role=Doctor${gpsQuery}`);
+        const data = await response.json();
+        setDoctors(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchDoctors();
+  }, [gpsCoords]);
+
+  const filteredDoctors = doctors.filter(d => 
     d.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    d.specialty.toLowerCase().includes(searchTerm.toLowerCase())
+    (d.specialty && d.specialty.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
+  const handleBook = (doc: any) => {
+    setSelectedDoctor(doc);
+  };
+
   return (
-    <div className="w-full max-w-5xl space-y-8 pb-20">
+    <>
+      <AnimatePresence>
+        {selectedDoctor && (
+          <PaymentModal 
+            doctor={selectedDoctor} 
+            user={user} 
+            onClose={() => setSelectedDoctor(null)} 
+            onSuccess={(receipt) => console.log('Paid', receipt)} 
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="w-full max-w-5xl space-y-8 pb-20">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-4xl font-bold text-slate-800">Expert <span className="text-gradient">Doctors</span></h2>
@@ -65,35 +98,45 @@ export function DoctorPortal({ onBack }: { onBack: () => void }) {
               <div className="bg-teal-50 w-24 h-24 rounded-2xl flex items-center justify-center overflow-hidden">
                  <UserCircle className="text-teal-300 w-20 h-20" />
               </div>
-              {doctor.online && (
-                <div className="absolute -top-2 -right-2 bg-gradient-premium p-1.5 rounded-lg shadow-lg">
-                   <Video className="text-white w-4 h-4" />
-                </div>
-              )}
+              <div className="absolute -top-2 -right-2 bg-gradient-premium p-1.5 rounded-lg shadow-lg">
+                 <Video className="text-white w-4 h-4" />
+              </div>
             </div>
 
             <div className="flex-1 text-center md:text-left">
                <h3 className="text-xl font-bold text-slate-800">{doctor.name}</h3>
-               <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
+               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-2">
                   <span className="flex items-center gap-1 text-teal-600 font-bold text-sm">
-                    <Stethoscope className="w-4 h-4" /> {doctor.specialty}
+                    <Stethoscope className="w-4 h-4" /> {doctor.specialty || "General Physician"}
                   </span>
-                  <span className="text-slate-400 text-sm">• {doctor.experience} Exp.</span>
+                  {doctor.distanceKm !== undefined && (
+                    <span className="flex items-center gap-1 bg-teal-50 text-teal-700 text-xs font-bold px-2 py-1 rounded-full border border-teal-200">
+                      <MapPin className="w-3 h-3" /> {doctor.distanceKm} km away
+                    </span>
+                  )}
+                  {!doctor.distanceKm && doctor.location && (
+                    <span className="flex items-center gap-1 text-slate-400 text-xs">
+                      <MapPin className="w-3 h-3" /> {doctor.location}
+                    </span>
+                  )}
                </div>
                <div className="flex items-center justify-center md:justify-start gap-1 mt-4">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={`w-4 h-4 ${i < Math.floor(doctor.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200'}`} />
+                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                   ))}
-                  <span className="ml-2 font-bold text-slate-700">{doctor.rating}</span>
+                  <span className="ml-2 font-bold text-slate-700">5.0</span>
                </div>
             </div>
 
             <div className="w-full md:w-auto flex flex-col items-center md:items-end gap-3 pt-6 md:pt-0 border-t md:border-t-0 md:border-l border-slate-100 md:pl-8">
-               <div className="text-2xl font-bold text-slate-800">{doctor.fees}</div>
+               <div className="text-2xl font-bold text-slate-800">₹{doctor.fees || 500}</div>
                <div className="text-slate-400 text-xs flex items-center gap-1">
                  <MapPin className="w-3 h-3" /> {doctor.location}
                </div>
-               <button className="w-full md:w-auto bg-gradient-premium text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-teal-500/20 hover:scale-105 transition-transform">
+               <button 
+                 onClick={() => handleBook(doctor)}
+                 className="w-full md:w-auto bg-gradient-premium text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-teal-500/20 hover:scale-105 transition-transform flex gap-2 items-center"
+               >
                  Book Appointment
                </button>
             </div>
@@ -101,5 +144,6 @@ export function DoctorPortal({ onBack }: { onBack: () => void }) {
         ))}
       </div>
     </div>
+    </>
   )
 }

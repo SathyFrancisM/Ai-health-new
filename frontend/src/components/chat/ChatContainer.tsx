@@ -106,7 +106,22 @@ export function ChatContainer({ onSpeak, onEmergency, user }: {
 
   const speakText = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    // Auto-detect language or use a friendly voice
+    
+    // Improve pronunciation for Indian terminology (Ayurveda/Home Remedies)
+    utterance.lang = 'en-IN'; 
+    
+    // Attempt to select a clear, localized voice if available
+    const voices = window.speechSynthesis.getVoices();
+    
+    // Prefer Indian English voice
+    const indianVoice = voices.find(v => v.lang === 'en-IN' || v.lang === 'hi-IN');
+    if (indianVoice) {
+      utterance.voice = indianVoice;
+    }
+
+    // Adjust rate for better clarity
+    utterance.rate = 0.95;
+
     window.speechSynthesis.speak(utterance);
   };
 
@@ -119,6 +134,9 @@ export function ChatContainer({ onSpeak, onEmergency, user }: {
     const recognition = new (window as any).webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
+    
+    // Set recognition language to Indian English to better capture Indian accents and terms
+    recognition.lang = 'en-IN';
     
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event: any) => {

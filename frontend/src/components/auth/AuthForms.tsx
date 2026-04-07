@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Mail, Lock, User, Heart, Activity, AlertCircle, MapPin } from "lucide-react"
 
-export function LoginForm({ onToggle, onLocationDetect, onLogin }: { onToggle: () => void, onLocationDetect: (loc: string) => void, onLogin: (user: any) => void }) {
+export function LoginForm({ onToggle, onLocationDetect, onGpsDetect, onLogin }: { onToggle: () => void, onLocationDetect: (loc: string) => void, onGpsDetect?: (coords: { lat: number; lng: number }) => void, onLogin: (user: any) => void }) {
   const [isMounted, setIsMounted] = useState(false);
   const [location, setLocation] = useState<string>("Detecting location...");
   const [email, setEmail] = useState("");
@@ -23,6 +23,8 @@ export function LoginForm({ onToggle, onLocationDetect, onLogin }: { onToggle: (
 
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
+        // Pass raw GPS coords back to page to use for distance sorting
+        if (onGpsDetect) onGpsDetect({ lat: latitude, lng: longitude });
         try {
           // Reverse geocoding using a public API with locality language
           const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
@@ -151,6 +153,9 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    whatsappNumber: "",
+    specialty: "",
+    fees: "",
     password: ""
   });
 
@@ -194,6 +199,46 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
             className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
           />
         </div>
+        <div className="relative">
+          <AlertCircle className="absolute left-3 top-3.5 h-5 w-5 text-slate-400" />
+          <input 
+            name="whatsappNumber"
+            type="text" 
+            placeholder="WhatsApp Number (e.g. 9876543210)" 
+            value={formData.whatsappNumber}
+            onChange={handleChange}
+            required
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+          />
+        </div>
+        {formData.email.includes('.doctor@') && (
+          <>
+            <div className="relative">
+              <User className="absolute left-3 top-3.5 h-5 w-5 text-slate-400" />
+              <input 
+                name="specialty"
+                type="text" 
+                placeholder="Medical Specialty" 
+                value={formData.specialty}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+              />
+            </div>
+            <div className="relative">
+              <span className="absolute left-4 top-3.5 h-5 w-5 font-bold text-slate-400">₹</span>
+              <input 
+                name="fees"
+                type="number" 
+                placeholder="Consultation Fees" 
+                value={formData.fees}
+                onChange={handleChange}
+                required
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+              />
+            </div>
+          </>
+        )}
         <div className="relative">
           <Lock className="absolute left-3 top-3.5 h-5 w-5 text-slate-400" />
           <input 

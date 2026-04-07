@@ -18,4 +18,19 @@ router.post('/login', authController.login);
 // @access  Private
 router.get('/me', auth, authController.getProfile);
 
+// @route   GET api/auth/network
+// @desc    Get nearby network
+// @access  Public (for demo)
+router.get('/network', authController.getNetwork);
+
+// @route   POST api/auth/payment
+// @desc    Process a mock payment
+// @access  Public
+router.post('/payment', authController.makePayment);
+
+// @route   GET api/auth/receipts
+// @desc    Get mock receipts
+// @access  Public
+router.get('/receipts', authController.getReceipts);
+
 module.exports = router;
