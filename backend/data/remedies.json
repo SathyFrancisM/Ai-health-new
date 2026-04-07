@@ -1,0 +1,386 @@
+[
+  {
+    "disease": "Common Cold",
+    "symptoms": ["runny nose", "sneezing", "nasal congestion", "sore throat", "mild fever", "chills"],
+    "herbal_remedies": ["Ginger tea with honey and lemon", "Steam inhalation with eucalyptus oil", "Tulsi kadha (Holy Basil decoction)", "Pepper rasam (Milagu Rasam)"],
+    "ayurvedic_herbs": ["Tulsi (Holy Basil)", "Giloy (Guduchi)", "Pippali (Long Pepper)", "Mulethi (Licorice)"],
+    "diet_recommendations": "Drink warm fluids frequently. Avoid cold foods and beverages. Eat light khichdi or rasam rice. Include turmeric milk (Haldi Doodh) before bed.",
+    "lifestyle_recommendations": "Rest adequately. Keep warm. Do steam inhalation 2-3 times daily. Gargle with warm salt water."
+  },
+  {
+    "disease": "Cough",
+    "symptoms": ["dry cough", "wet cough", "throat irritation", "phlegm", "chest congestion", "tickle in throat"],
+    "herbal_remedies": ["Ginger juice with honey (1 tsp each, twice daily)", "Turmeric milk before bed", "Mulethi (Licorice) chewing stick", "Clove and honey paste"],
+    "ayurvedic_herbs": ["Adulsa (Vasaka)", "Mulethi (Licorice)", "Tulsi (Holy Basil)", "Kantakari"],
+    "diet_recommendations": "Avoid fried and oily foods. Drink warm water throughout the day. Have warm soups and broths.",
+    "lifestyle_recommendations": "Avoid cold air exposure. Use a humidifier. Elevate head while sleeping. Avoid smoking and dusty environments."
+  },
+  {
+    "disease": "Fever",
+    "symptoms": ["high temperature", "body ache", "shivering", "sweating", "weakness", "loss of appetite", "chills"],
+    "herbal_remedies": ["Tulsi tea (boil 10-12 leaves in water)", "Giloy juice with warm water", "Coriander seed water (boil and strain)", "Raisin water (soak overnight)"],
+    "ayurvedic_herbs": ["Tulsi (Holy Basil)", "Giloy (Guduchi/Amrita)", "Neem", "Chirayata"],
+    "diet_recommendations": "Eat light, easily digestible food like moong dal khichdi. Stay hydrated with warm fluids. Avoid heavy and spicy food.",
+    "lifestyle_recommendations": "Complete bed rest. Apply wet cloth on forehead. Drink plenty of fluids. Monitor temperature regularly."
+  },
+  {
+    "disease": "Headache",
+    "symptoms": ["head pain", "temple pain", "migraine", "tension headache", "throbbing pain", "pressure in head"],
+    "herbal_remedies": ["Peppermint oil massage on temples", "Cinnamon paste on forehead", "Ginger tea", "Clove powder paste with salt applied to forehead"],
+    "ayurvedic_herbs": ["Brahmi", "Jatamansi", "Shankhpushpi", "Ashwagandha"],
+    "diet_recommendations": "Stay hydrated. Avoid caffeine withdrawal. Eat regular meals. Include magnesium-rich foods like almonds and spinach.",
+    "lifestyle_recommendations": "Rest in a dark quiet room. Practice deep breathing. Avoid screen exposure. Apply cold compress on forehead."
+  },
+  {
+    "disease": "Stomach Pain",
+    "symptoms": ["abdominal pain", "stomach ache", "cramping", "bloating", "gas", "indigestion", "nausea"],
+    "herbal_remedies": ["Ajwain (Carom seeds) with black salt and warm water", "Ginger water after meals", "Hing (Asafoetida) dissolved in warm water", "Jeera (Cumin) water"],
+    "ayurvedic_herbs": ["Ajwain (Carom)", "Hing (Asafoetida)", "Saunf (Fennel)", "Pudina (Peppermint)"],
+    "diet_recommendations": "Eat small frequent meals. Avoid heavy oily food. Include buttermilk (chaas) with cumin. Eat ripe bananas.",
+    "lifestyle_recommendations": "Walk for 15 minutes after meals. Avoid lying down immediately after eating. Practice Vajrasana after food."
+  },
+  {
+    "disease": "Acidity",
+    "symptoms": ["heartburn", "acid reflux", "burning sensation in chest", "sour taste", "burping", "nausea after eating"],
+    "herbal_remedies": ["Cold milk (plain, without sugar)", "Banana consumption", "Fennel seed water", "Amla (Indian Gooseberry) juice"],
+    "ayurvedic_herbs": ["Amla (Indian Gooseberry)", "Yashtimadhu (Licorice)", "Shatavari", "Avipattikar Churna"],
+    "diet_recommendations": "Avoid spicy, fried, and citrus foods. Eat smaller meals. Include cooling foods like cucumber and coconut water.",
+    "lifestyle_recommendations": "Don't lie down within 2 hours of eating. Elevate head while sleeping. Reduce stress. Avoid carbonated drinks."
+  },
+  {
+    "disease": "Constipation",
+    "symptoms": ["difficulty passing stool", "hard stool", "bloating", "abdominal discomfort", "straining", "incomplete evacuation"],
+    "herbal_remedies": ["Triphala powder with warm water at bedtime", "Isabgol (Psyllium husk) with warm milk", "Castor oil (1 tsp with warm milk)", "Warm lemon water in morning"],
+    "ayurvedic_herbs": ["Triphala", "Haritaki", "Isabgol (Psyllium)", "Senna leaves"],
+    "diet_recommendations": "Increase fiber intake with fruits and vegetables. Drink 8-10 glasses of warm water daily. Eat papaya and prunes.",
+    "lifestyle_recommendations": "Exercise regularly. Establish regular bowel habits. Don't suppress urges. Walk for 30 minutes daily."
+  },
+  {
+    "disease": "Diarrhea",
+    "symptoms": ["loose stools", "watery stool", "frequent bowel movements", "stomach cramps", "dehydration", "weakness"],
+    "herbal_remedies": ["Pomegranate peel powder with water", "Rice water (kanji)", "Cumin and fenugreek seed powder", "Banana with curd"],
+    "ayurvedic_herbs": ["Kutaja (Holarrhena)", "Bilva (Bael fruit)", "Musta (Nagarmotha)", "Pomegranate"],
+    "diet_recommendations": "Follow BRAT diet (Banana, Rice, Apple, Toast). Drink ORS or lemon-salt-sugar water. Avoid dairy except curd.",
+    "lifestyle_recommendations": "Rest adequately. Maintain hygiene. Drink boiled and cooled water. Avoid outside food."
+  },
+  {
+    "disease": "Sore Throat",
+    "symptoms": ["throat pain", "difficulty swallowing", "scratchy throat", "redness", "swollen tonsils", "hoarse voice"],
+    "herbal_remedies": ["Warm salt water gargle (every 3-4 hours)", "Turmeric milk", "Honey with black pepper", "Mulethi (Licorice) tea"],
+    "ayurvedic_herbs": ["Mulethi (Licorice)", "Tulsi (Holy Basil)", "Haridra (Turmeric)", "Lavang (Clove)"],
+    "diet_recommendations": "Drink warm fluids. Eat soft foods. Avoid cold and sour foods. Include honey in warm water.",
+    "lifestyle_recommendations": "Rest your voice. Use a humidifier. Avoid irritants like smoke. Keep throat warm with a scarf."
+  },
+  {
+    "disease": "Joint Pain",
+    "symptoms": ["knee pain", "joint stiffness", "swelling in joints", "arthritis", "body pain", "muscle ache"],
+    "herbal_remedies": ["Warm sesame oil massage with garlic", "Turmeric and ginger paste applied externally", "Nirgundi oil massage", "Epsom salt warm water soak"],
+    "ayurvedic_herbs": ["Shallaki (Boswellia)", "Guggulu", "Ashwagandha", "Nirgundi (Five-leaved chaste tree)"],
+    "diet_recommendations": "Include anti-inflammatory foods like turmeric and ginger. Eat omega-3 rich foods. Avoid processed foods and excess salt.",
+    "lifestyle_recommendations": "Do gentle exercises and stretching. Apply warm compress. Maintain healthy weight. Practice yoga (Surya Namaskar)."
+  },
+  {
+    "disease": "Skin Rash",
+    "symptoms": ["itching", "redness", "skin irritation", "bumps", "dry patches", "burning sensation on skin", "rash"],
+    "herbal_remedies": ["Fresh Aloe Vera gel application", "Neem leaf paste", "Sandalwood (Chandan) paste with rose water", "Coconut oil with turmeric"],
+    "ayurvedic_herbs": ["Neem", "Manjistha", "Khadira (Acacia)", "Haridra (Turmeric)"],
+    "diet_recommendations": "Avoid spicy and fermented foods. Drink plenty of water. Include blood-purifying foods like bitter gourd. Eat fresh fruits.",
+    "lifestyle_recommendations": "Wear loose cotton clothing. Avoid harsh soaps. Keep skin moisturized. Bathe with neem water."
+  },
+  {
+    "disease": "Insomnia",
+    "symptoms": ["difficulty sleeping", "sleeplessness", "restlessness at night", "waking up frequently", "fatigue", "anxiety at night"],
+    "herbal_remedies": ["Warm milk with nutmeg (Jaiphal) powder", "Ashwagandha powder with milk at bedtime", "Brahmi tea", "Chamomile and Shankhpushpi tea"],
+    "ayurvedic_herbs": ["Ashwagandha", "Brahmi", "Jatamansi", "Shankhpushpi", "Tagara (Indian Valerian)"],
+    "diet_recommendations": "Avoid caffeine after 2 PM. Eat light dinner. Include tryptophan-rich foods like milk and bananas. Avoid heavy meals at night.",
+    "lifestyle_recommendations": "Maintain fixed sleep schedule. Avoid screens 1 hour before bed. Practice meditation. Massage feet with warm sesame oil."
+  },
+  {
+    "disease": "Diabetes Management",
+    "symptoms": ["high blood sugar", "frequent urination", "excessive thirst", "fatigue", "blurred vision", "slow wound healing"],
+    "herbal_remedies": ["Fenugreek seeds soaked overnight (chew in morning)", "Bitter gourd (Karela) juice", "Jamun seed powder with water", "Amla juice daily"],
+    "ayurvedic_herbs": ["Gudmar (Gymnema)", "Vijaysar (Pterocarpus)", "Neem", "Karela (Bitter Melon)", "Jamun (Indian Blackberry)"],
+    "diet_recommendations": "Control carbohydrate intake. Eat high-fiber foods. Include bitter foods. Avoid sugar and refined flour. Eat small frequent meals.",
+    "lifestyle_recommendations": "Exercise daily for 30-45 minutes. Monitor blood sugar regularly. Manage stress. Walk after every meal."
+  },
+  {
+    "disease": "Hypertension",
+    "symptoms": ["high blood pressure", "headache", "dizziness", "chest discomfort", "shortness of breath", "nosebleed"],
+    "herbal_remedies": ["Garlic clove on empty stomach", "Arjuna bark tea", "Watermelon seed water", "Hibiscus tea"],
+    "ayurvedic_herbs": ["Arjuna", "Sarpagandha (Rauwolfia)", "Ashwagandha", "Brahmi", "Jatamansi"],
+    "diet_recommendations": "Reduce salt intake (under 5g/day). Eat potassium-rich foods like bananas and spinach. Follow DASH diet principles.",
+    "lifestyle_recommendations": "Practice pranayama and meditation. Exercise regularly. Reduce stress. Avoid smoking and excess alcohol."
+  },
+  {
+    "disease": "Anxiety",
+    "symptoms": ["nervousness", "worry", "restlessness", "rapid heartbeat", "sweating", "tension", "panic", "fear"],
+    "herbal_remedies": ["Ashwagandha milk at bedtime", "Brahmi tea twice daily", "Jatamansi powder with honey", "Shankhpushpi syrup"],
+    "ayurvedic_herbs": ["Ashwagandha", "Brahmi", "Shankhpushpi", "Jatamansi", "Vacha (Calamus)"],
+    "diet_recommendations": "Eat sattvic diet (fresh, light). Avoid caffeine and stimulants. Include nuts, seeds, and warm milk. Eat regular meals.",
+    "lifestyle_recommendations": "Practice Pranayama (Anulom Vilom). Do meditation daily. Exercise regularly. Maintain a journal. Limit screen time."
+  },
+  {
+    "disease": "Allergic Rhinitis",
+    "symptoms": ["sneezing", "runny nose", "itchy nose", "watery eyes", "nasal congestion", "post-nasal drip"],
+    "herbal_remedies": ["Nasya with Anu Taila (nasal oil drops)", "Turmeric milk", "Steam inhalation with ajwain", "Honey with black pepper"],
+    "ayurvedic_herbs": ["Haridra (Turmeric)", "Tulsi (Holy Basil)", "Pippali (Long Pepper)", "Sitopaladi Churna"],
+    "diet_recommendations": "Avoid cold foods and drinks. Include warm spices in diet. Drink warm water throughout day. Avoid dairy if mucus is excessive.",
+    "lifestyle_recommendations": "Use a neti pot with saline water. Avoid allergens (dust, pollen). Keep home clean. Practice Pranayama."
+  },
+  {
+    "disease": "Asthma",
+    "symptoms": ["wheezing", "shortness of breath", "chest tightness", "difficulty breathing", "coughing at night"],
+    "herbal_remedies": ["Honey with black pepper and ginger juice", "Boiled fenugreek seeds water", "Tulsi and ginger decoction", "Vasaka (Adulsa) leaf juice"],
+    "ayurvedic_herbs": ["Vasaka (Adulsa)", "Kantakari", "Pippali (Long Pepper)", "Tulsi (Holy Basil)"],
+    "diet_recommendations": "Avoid cold and heavy foods. Eat light warm meals. Include garlic and onion in cooking. Avoid dairy if triggering.",
+    "lifestyle_recommendations": "Practice Pranayama (Bhastrika). Avoid smoke and pollution. Keep rescue inhaler accessible. Regular breathing exercises."
+  },
+  {
+    "disease": "Urinary Tract Infection",
+    "symptoms": ["burning urination", "frequent urination", "cloudy urine", "pelvic pain", "strong odor in urine"],
+    "herbal_remedies": ["Cranberry juice (unsweetened)", "Coriander seed water", "Coconut water daily", "Barley water"],
+    "ayurvedic_herbs": ["Gokshura (Tribulus)", "Punarnava", "Chandan (Sandalwood)", "Varuna (Crataeva)"],
+    "diet_recommendations": "Drink 3-4 liters of water daily. Avoid spicy and caffeinated drinks. Include cucumber and watermelon. Drink buttermilk.",
+    "lifestyle_recommendations": "Maintain hygiene. Don't hold urine. Wear cotton undergarments. Wash with warm water."
+  },
+  {
+    "disease": "Anemia",
+    "symptoms": ["fatigue", "pale skin", "weakness", "dizziness", "shortness of breath", "cold hands and feet"],
+    "herbal_remedies": ["Beetroot and carrot juice daily", "Pomegranate juice", "Dates and jaggery consumption", "Amla and honey mixture"],
+    "ayurvedic_herbs": ["Punarnava", "Loha Bhasma (Iron ash)", "Mandur Bhasma", "Dhatri (Amla)"],
+    "diet_recommendations": "Eat iron-rich foods: spinach, beetroot, dates, jaggery, pomegranate. Combine with Vitamin C for absorption. Avoid tea with meals.",
+    "lifestyle_recommendations": "Cook in iron utensils. Get adequate rest. Avoid strenuous activity until hemoglobin improves."
+  },
+  {
+    "disease": "Menstrual Cramps",
+    "symptoms": ["period pain", "lower abdominal cramps", "back pain during periods", "heavy bleeding", "nausea", "mood swings"],
+    "herbal_remedies": ["Ginger tea during periods", "Ajwain water with jaggery", "Warm sesame oil massage on lower abdomen", "Fenugreek seed water"],
+    "ayurvedic_herbs": ["Ashoka", "Shatavari", "Lodhra", "Dashamoola"],
+    "diet_recommendations": "Eat warm, easily digestible foods. Include iron-rich foods. Avoid cold and raw foods during periods. Drink warm water.",
+    "lifestyle_recommendations": "Apply warm compress on abdomen. Do gentle yoga (Baddha Konasana). Rest adequately. Avoid heavy exercise."
+  },
+  {
+    "disease": "Hair Loss",
+    "symptoms": ["excessive hair fall", "thinning hair", "bald patches", "weak hair roots", "dandruff related hair loss"],
+    "herbal_remedies": ["Bhringraj oil head massage", "Amla and coconut oil mixture", "Onion juice applied to scalp", "Fenugreek seed paste hair mask"],
+    "ayurvedic_herbs": ["Bhringraj", "Amla (Indian Gooseberry)", "Brahmi", "Hibiscus"],
+    "diet_recommendations": "Eat protein-rich diet. Include biotin-rich foods (eggs, nuts). Eat iron and zinc-rich foods. Stay hydrated.",
+    "lifestyle_recommendations": "Oil massage scalp twice a week. Avoid harsh chemical shampoos. Reduce stress. Avoid tight hairstyles."
+  },
+  {
+    "disease": "Eye Strain",
+    "symptoms": ["tired eyes", "dry eyes", "blurred vision", "eye pain", "watery eyes", "sensitivity to light"],
+    "herbal_remedies": ["Rose water eye drops (2 drops in each eye)", "Triphala eye wash", "Cucumber slices on closed eyes", "Fennel seed tea"],
+    "ayurvedic_herbs": ["Triphala", "Saptamrit Loha", "Punarnava", "Jyotishmati (Celastrus)"],
+    "diet_recommendations": "Eat carrots, sweet potatoes, and green leafy vegetables. Include Vitamin A-rich foods. Eat almonds and walnuts.",
+    "lifestyle_recommendations": "Follow 20-20-20 rule (every 20 min, look 20 feet away for 20 sec). Blink frequently. Reduce screen brightness."
+  },
+  {
+    "disease": "Obesity",
+    "symptoms": ["excess weight", "increased BMI", "fatigue", "shortness of breath", "joint pain from weight", "sluggish metabolism"],
+    "herbal_remedies": ["Warm lemon and honey water in morning", "Triphala powder at bedtime", "Green tea with ginger", "Apple cider vinegar with water before meals"],
+    "ayurvedic_herbs": ["Guggulu", "Triphala", "Medohar Guggulu", "Garcinia (Vrikshamla)"],
+    "diet_recommendations": "Eat mindfully and in moderation. Increase vegetables and fiber. Avoid processed and sugary foods. Eat biggest meal at lunch.",
+    "lifestyle_recommendations": "Exercise 45-60 minutes daily. Practice Surya Namaskar. Walk after meals. Sleep 7-8 hours. Manage stress."
+  },
+  {
+    "disease": "Toothache",
+    "symptoms": ["tooth pain", "gum swelling", "sensitivity to hot/cold", "jaw pain", "throbbing pain in tooth"],
+    "herbal_remedies": ["Clove oil applied directly to tooth", "Warm salt water rinse", "Garlic paste on affected tooth", "Guava leaf decoction mouth rinse"],
+    "ayurvedic_herbs": ["Lavang (Clove)", "Babool (Acacia) bark", "Neem datun (chewing stick)", "Spilanthes (Akarkara)"],
+    "diet_recommendations": "Avoid very hot or cold foods. Eat soft foods. Avoid sugary and acidic foods. Include calcium-rich foods.",
+    "lifestyle_recommendations": "Maintain oral hygiene. Use neem or babool datun. Rinse mouth after every meal. Visit dentist if pain persists."
+  },
+  {
+    "disease": "Piles (Hemorrhoids)",
+    "symptoms": ["bleeding during bowel movement", "pain during stool", "itching around anus", "swelling near anus", "discomfort sitting"],
+    "herbal_remedies": ["Triphala powder for regular bowel", "Radish juice with salt", "Warm sitz bath with neem leaves", "Buttermilk with rock salt and cumin"],
+    "ayurvedic_herbs": ["Arshoghni Vati", "Kankayan Vati", "Haritaki", "Suran (Elephant Yam)"],
+    "diet_recommendations": "Eat high-fiber diet. Drink plenty of water. Include papaya, figs, and leafy greens. Avoid spicy and fried foods.",
+    "lifestyle_recommendations": "Avoid sitting for long periods. Do Kegel exercises. Take warm sitz baths. Don't strain during bowel movements."
+  },
+  {
+    "disease": "Back Pain",
+    "symptoms": ["lower back pain", "upper back pain", "stiffness", "muscle spasm", "sciatica", "difficulty bending"],
+    "herbal_remedies": ["Warm sesame oil massage", "Turmeric and ginger anti-inflammatory paste", "Nirgundi oil massage", "Rasnadi powder warm application"],
+    "ayurvedic_herbs": ["Shallaki (Boswellia)", "Guggulu", "Rasna", "Bala (Sida cordifolia)"],
+    "diet_recommendations": "Include anti-inflammatory foods. Eat calcium and Vitamin D rich foods. Avoid inflammatory foods like refined sugar.",
+    "lifestyle_recommendations": "Do gentle yoga (Cat-Cow, Child's Pose). Maintain good posture. Sleep on firm mattress. Apply warm compress."
+  },
+  {
+    "disease": "Weak Immunity",
+    "symptoms": ["frequent infections", "slow healing", "constant fatigue", "frequent cold", "low energy"],
+    "herbal_remedies": ["Chyawanprash (1 tsp daily)", "Giloy juice daily", "Amla and honey mixture", "Turmeric golden milk"],
+    "ayurvedic_herbs": ["Ashwagandha", "Giloy (Guduchi)", "Amla", "Tulsi (Holy Basil)", "Shatavari"],
+    "diet_recommendations": "Eat balanced sattvic diet. Include seasonal fruits and vegetables. Add garlic, ginger, turmeric to cooking. Eat probiotic foods.",
+    "lifestyle_recommendations": "Exercise regularly. Get adequate sleep (7-8 hrs). Practice Pranayama. Manage stress. Get sunlight exposure."
+  },
+  {
+    "disease": "Mouth Ulcers",
+    "symptoms": ["sores in mouth", "painful white spots", "difficulty eating", "burning in mouth", "swollen gums"],
+    "herbal_remedies": ["Honey applied directly on ulcer", "Coconut oil swishing (oil pulling)", "Mulethi powder applied on ulcer", "Aloe vera gel rinse"],
+    "ayurvedic_herbs": ["Khadiradi Vati", "Yashtimadhu (Licorice)", "Kamadudha Ras", "Amalaki (Amla)"],
+    "diet_recommendations": "Avoid spicy, hot, and acidic foods. Eat cooling foods like cucumber and yogurt. Include Vitamin B and iron-rich foods.",
+    "lifestyle_recommendations": "Maintain oral hygiene. Avoid toothpaste with SLS. Reduce stress. Rinse with warm salt water."
+  },
+  {
+    "disease": "Dandruff",
+    "symptoms": ["flaky scalp", "itchy scalp", "white flakes on shoulders", "dry scalp", "oily scalp with flakes"],
+    "herbal_remedies": ["Neem oil scalp massage", "Lemon juice with coconut oil", "Fenugreek seed paste mask", "Apple cider vinegar rinse"],
+    "ayurvedic_herbs": ["Neem", "Tea Tree", "Bhringraj", "Khadir (Acacia catechu)"],
+    "diet_recommendations": "Eat zinc and B-vitamin rich foods. Include omega-3 fatty acids. Stay hydrated. Reduce sugar intake.",
+    "lifestyle_recommendations": "Wash hair regularly with mild shampoo. Avoid hot water on scalp. Reduce stress. Oil scalp regularly."
+  },
+  {
+    "disease": "Ear Pain",
+    "symptoms": ["ear ache", "ear infection", "blocked ear", "ringing in ear", "pain in ear canal"],
+    "herbal_remedies": ["Warm mustard oil drops (2 drops in affected ear)", "Garlic oil ear drops (garlic cooked in sesame oil)", "Tulsi juice warm drops", "Warm compress on ear"],
+    "ayurvedic_herbs": ["Bilva (Bael)", "Nirgundi", "Sarshapa (Mustard)", "Lashuna (Garlic)"],
+    "diet_recommendations": "Stay hydrated. Avoid dairy if prone to ear infections. Include anti-inflammatory foods.",
+    "lifestyle_recommendations": "Keep ears dry. Don't insert objects in ear. Use warm compress. Consult doctor if discharge is present."
+  },
+  {
+    "disease": "Thyroid Disorders",
+    "symptoms": ["weight gain", "fatigue", "cold sensitivity", "dry skin", "hair loss", "constipation", "irregular periods"],
+    "herbal_remedies": ["Ashwagandha powder with warm milk", "Kanchanar Guggulu tablets", "Coconut oil in cooking", "Flaxseed consumption"],
+    "ayurvedic_herbs": ["Kanchanar", "Guggulu", "Ashwagandha", "Brahmi", "Shilajit"],
+    "diet_recommendations": "Include iodine-rich foods (iodized salt, seaweed). Eat selenium-rich foods (Brazil nuts). Include zinc-rich foods. Limit goitrogens (raw cruciferous vegetables).",
+    "lifestyle_recommendations": "Exercise regularly. Practice yoga (Sarvangasana, Halasana). Manage stress. Get regular thyroid check-ups."
+  },
+  {
+    "disease": "Kidney Stones",
+    "symptoms": ["severe flank pain", "blood in urine", "painful urination", "nausea", "frequent urination"],
+    "herbal_remedies": ["Lemon juice with olive oil", "Barley water daily", "Banana stem juice", "Coconut water daily"],
+    "ayurvedic_herbs": ["Pashanbhed (Bergenia)", "Gokshura (Tribulus)", "Varuna (Crataeva)", "Punarnava"],
+    "diet_recommendations": "Drink 3-4 liters of water daily. Limit oxalate-rich foods (spinach, chocolate). Reduce salt intake. Include citrus fruits.",
+    "lifestyle_recommendations": "Stay well hydrated. Exercise regularly. Avoid holding urine. Limit protein and sodium intake."
+  },
+  {
+    "disease": "Sinusitis",
+    "symptoms": ["facial pain", "nasal congestion", "thick nasal discharge", "headache", "loss of smell", "pressure around eyes"],
+    "herbal_remedies": ["Steam inhalation with eucalyptus oil", "Nasya with Anu Taila", "Turmeric and ginger tea", "Warm compress on face"],
+    "ayurvedic_herbs": ["Haridra (Turmeric)", "Chitrak", "Trikatu", "Sitopaladi Churna"],
+    "diet_recommendations": "Drink warm fluids. Avoid cold and dairy products. Include spicy foods like pepper and ginger. Eat light warm meals.",
+    "lifestyle_recommendations": "Do Jal Neti (nasal irrigation) daily. Steam inhalation twice daily. Elevate head while sleeping. Avoid cold environments."
+  },
+  {
+    "disease": "Gastritis",
+    "symptoms": ["upper abdominal pain", "nausea", "vomiting", "loss of appetite", "feeling full quickly", "burning in stomach"],
+    "herbal_remedies": ["Amla juice on empty stomach", "Coconut water", "Licorice root tea", "Fennel and cumin water"],
+    "ayurvedic_herbs": ["Amla (Indian Gooseberry)", "Yashtimadhu (Licorice)", "Shatavari", "Avipattikar Churna"],
+    "diet_recommendations": "Eat small frequent meals. Avoid spicy, fried, and sour foods. Include cooling foods. Drink buttermilk with cumin.",
+    "lifestyle_recommendations": "Eat meals at regular times. Avoid alcohol and NSAIDs. Manage stress. Don't skip meals. Avoid smoking."
+  },
+  {
+    "disease": "Eczema",
+    "symptoms": ["itchy skin", "red patches", "dry cracked skin", "scaly skin", "swelling", "oozing blisters"],
+    "herbal_remedies": ["Neem oil application", "Turmeric and coconut oil paste", "Aloe vera gel", "Sandalwood and rose water paste"],
+    "ayurvedic_herbs": ["Neem", "Manjistha", "Khadira (Acacia)", "Sariva (Indian Sarsaparilla)"],
+    "diet_recommendations": "Avoid trigger foods (dairy, gluten if sensitive). Eat anti-inflammatory foods. Include omega-3 fatty acids. Stay hydrated.",
+    "lifestyle_recommendations": "Moisturize skin regularly. Wear soft cotton clothing. Avoid harsh soaps. Bathe in lukewarm (not hot) water."
+  },
+  {
+    "disease": "Vertigo",
+    "symptoms": ["dizziness", "spinning sensation", "loss of balance", "nausea with dizziness", "lightheadedness"],
+    "herbal_remedies": ["Ginger tea", "Amla juice", "Coriander seed soaked water", "Lemon water with black pepper"],
+    "ayurvedic_herbs": ["Shankhpushpi", "Ashwagandha", "Brahmi", "Saraswatarishta"],
+    "diet_recommendations": "Stay hydrated. Avoid excess salt. Eat iron-rich foods. Include vitamin B6-rich foods like bananas.",
+    "lifestyle_recommendations": "Move slowly when changing positions. Do balance exercises. Avoid sudden head movements. Sleep with head elevated."
+  },
+  {
+    "disease": "Cholesterol (High)",
+    "symptoms": ["high cholesterol levels", "chest discomfort", "fatty deposits", "shortness of breath during exertion"],
+    "herbal_remedies": ["Garlic clove daily on empty stomach", "Coriander seed water", "Arjuna bark powder tea", "Fenugreek seed water"],
+    "ayurvedic_herbs": ["Arjuna", "Guggulu", "Garlic (Lasuna)", "Triphala"],
+    "diet_recommendations": "Reduce saturated fats. Include fiber-rich foods. Eat oats and whole grains. Include omega-3 fatty acids. Use olive oil.",
+    "lifestyle_recommendations": "Exercise 30-45 minutes daily. Maintain healthy weight. Avoid smoking. Reduce alcohol. Practice stress management."
+  },
+  {
+    "disease": "Jaundice",
+    "symptoms": ["yellow skin", "yellow eyes", "dark urine", "pale stool", "fatigue", "abdominal pain", "loss of appetite"],
+    "herbal_remedies": ["Sugarcane juice", "Radish leaf juice", "Barley water", "Papaya leaf extract"],
+    "ayurvedic_herbs": ["Bhumyamalaki (Phyllanthus)", "Kutki (Picrorhiza)", "Kalmegh (Andrographis)", "Punarnava"],
+    "diet_recommendations": "Eat light, easily digestible food. Include sugarcane juice and radish. Avoid oily, fried, and heavy foods. Eat fresh fruits.",
+    "lifestyle_recommendations": "Complete bed rest. Avoid alcohol completely. Drink plenty of fluids. Get regular liver function tests."
+  },
+  {
+    "disease": "Dengue Fever",
+    "symptoms": ["high fever", "severe headache", "pain behind eyes", "joint pain", "muscle pain", "rash", "bleeding gums"],
+    "herbal_remedies": ["Papaya leaf juice (most effective for platelet count)", "Giloy juice", "Tulsi tea", "Wheatgrass juice"],
+    "ayurvedic_herbs": ["Carica papaya (Papaya leaf)", "Giloy (Guduchi)", "Tulsi (Holy Basil)", "Neem"],
+    "diet_recommendations": "Stay extremely hydrated. Drink coconut water, lemon water, and ORS. Eat protein-rich and nutritious food. Avoid oily food.",
+    "lifestyle_recommendations": "Complete bed rest. Monitor platelet count daily. Use mosquito nets and repellents. Seek medical attention if platelets drop below 40,000."
+  },
+  {
+    "disease": "PCOD/PCOS",
+    "symptoms": ["irregular periods", "weight gain", "acne", "excessive hair growth", "thinning hair", "mood swings", "infertility"],
+    "herbal_remedies": ["Shatavari powder with warm milk", "Cinnamon tea daily", "Fenugreek seed water", "Spearmint tea (2 cups daily)"],
+    "ayurvedic_herbs": ["Shatavari", "Ashoka", "Lodhra", "Kanchanar Guggulu", "Ashwagandha"],
+    "diet_recommendations": "Follow low-glycemic diet. Include anti-inflammatory foods. Avoid processed and sugary foods. Eat complex carbs and lean protein.",
+    "lifestyle_recommendations": "Exercise regularly (yoga, walking). Manage stress. Get 7-8 hours sleep. Maintain healthy weight. Track menstrual cycle."
+  },
+  {
+    "disease": "Migraine",
+    "symptoms": ["severe one-sided headache", "nausea", "sensitivity to light", "sensitivity to sound", "visual aura", "throbbing pain"],
+    "herbal_remedies": ["Peppermint oil on temples", "Ginger tea at onset", "Butterbur supplement", "Cold compress on forehead"],
+    "ayurvedic_herbs": ["Godanti Bhasma", "Shirashuladi Vajra Ras", "Brahmi", "Pathyadi Kwath"],
+    "diet_recommendations": "Identify and avoid trigger foods (cheese, chocolate, caffeine, alcohol). Stay hydrated. Eat regular meals. Include magnesium-rich foods.",
+    "lifestyle_recommendations": "Maintain sleep schedule. Manage stress. Avoid bright lights and loud sounds during attack. Rest in dark quiet room."
+  },
+  {
+    "disease": "Burns (Minor)",
+    "symptoms": ["skin burn", "redness", "pain", "blistering", "swelling at burn site"],
+    "herbal_remedies": ["Aloe vera gel (fresh)", "Coconut oil after cooling", "Honey application", "Raw potato slice on burn"],
+    "ayurvedic_herbs": ["Kumari (Aloe vera)", "Ghee (clarified butter)", "Yashtimadhu (Licorice)", "Chandan (Sandalwood)"],
+    "diet_recommendations": "Eat protein-rich food for healing. Stay hydrated. Include Vitamin C-rich foods. Eat fruits and vegetables.",
+    "lifestyle_recommendations": "Cool burn under running water for 10 minutes. Don't pop blisters. Keep wound clean. Seek medical help for severe burns."
+  },
+  {
+    "disease": "Worm Infestation",
+    "symptoms": ["stomach pain", "itching around anus", "loss of appetite", "weight loss", "visible worms in stool", "teeth grinding at night"],
+    "herbal_remedies": ["Vidanga powder with honey", "Raw papaya and honey", "Ajwain and jaggery mixture", "Neem leaf juice on empty stomach"],
+    "ayurvedic_herbs": ["Vidanga (Embelia)", "Palash (Butea)", "Neem", "Tulsi"],
+    "diet_recommendations": "Eat pumpkin seeds. Include garlic and carrots. Avoid sugary foods. Eat pomegranate on empty stomach.",
+    "lifestyle_recommendations": "Maintain hand hygiene. Wash vegetables thoroughly. Drink boiled water. Trim nails regularly. Deworm every 6 months."
+  },
+  {
+    "disease": "Liver Disorders",
+    "symptoms": ["fatigue", "jaundice", "abdominal pain right side", "dark urine", "loss of appetite", "nausea"],
+    "herbal_remedies": ["Bhumyamalaki decoction", "Kutki powder with honey", "Aloe vera juice on empty stomach", "Papaya seeds with lemon juice"],
+    "ayurvedic_herbs": ["Bhumyamalaki (Phyllanthus)", "Kutki (Picrorhiza)", "Kalmegh (Andrographis)", "Arogyavardhini Vati"],
+    "diet_recommendations": "Eat light food. Avoid alcohol completely. Include bitter vegetables. Eat fresh fruits and vegetables. Avoid fried and fatty foods.",
+    "lifestyle_recommendations": "Avoid alcohol and smoking. Exercise regularly. Get adequate rest. Monitor liver function regularly."
+  },
+  {
+    "disease": "Conjunctivitis (Pink Eye)",
+    "symptoms": ["red eyes", "itchy eyes", "eye discharge", "watery eyes", "swollen eyelids", "gritty feeling in eye"],
+    "herbal_remedies": ["Rose water drops (2 drops per eye)", "Cold compress with cotton", "Triphala eye wash (cooled decoction)", "Honey diluted eye drops"],
+    "ayurvedic_herbs": ["Triphala", "Lodhra", "Haridra (Turmeric)", "Gulab (Rose)"],
+    "diet_recommendations": "Eat Vitamin A-rich foods. Include green leafy vegetables. Stay hydrated. Avoid spicy and sour foods.",
+    "lifestyle_recommendations": "Don't touch or rub eyes. Wash hands frequently. Use separate towels. Avoid sharing eye cosmetics. Wear sunglasses."
+  },
+  {
+    "disease": "Tonsillitis",
+    "symptoms": ["swollen tonsils", "severe throat pain", "difficulty swallowing", "fever with throat pain", "ear pain", "bad breath"],
+    "herbal_remedies": ["Warm salt water gargle (every 2 hours)", "Turmeric and salt milk", "Honey and ginger paste", "Mulethi tea"],
+    "ayurvedic_herbs": ["Kanchanar Guggulu", "Agastya Rasayana", "Mulethi (Licorice)", "Haridra (Turmeric)"],
+    "diet_recommendations": "Eat warm, soft foods only. Drink warm fluids. Avoid cold, spicy, and crunchy foods. Include turmeric milk.",
+    "lifestyle_recommendations": "Rest your voice. Gargle frequently. Stay warm. Breathe through nose, not mouth."
+  },
+  {
+    "disease": "Fungal Infection",
+    "symptoms": ["itchy skin patches", "ring-shaped rash", "red scaly patches", "athlete's foot", "nail discoloration"],
+    "herbal_remedies": ["Neem paste application", "Tea tree oil with coconut oil", "Turmeric paste with mustard oil", "Garlic paste on affected area"],
+    "ayurvedic_herbs": ["Neem", "Daruharidra (Tree Turmeric)", "Haridra (Turmeric)", "Karanja (Pongamia)"],
+    "diet_recommendations": "Avoid sugar and yeast-containing foods. Eat probiotic foods like yogurt. Include garlic in diet. Stay hydrated.",
+    "lifestyle_recommendations": "Keep affected area dry. Wear loose cotton clothing. Don't share personal items. Maintain good hygiene."
+  },
+  {
+    "disease": "Dehydration",
+    "symptoms": ["dry mouth", "extreme thirst", "dark urine", "fatigue", "dizziness", "dry skin", "headache"],
+    "herbal_remedies": ["ORS (Oral Rehydration Solution) homemade: salt, sugar, lemon in water", "Coconut water", "Buttermilk with salt and cumin", "Watermelon juice"],
+    "ayurvedic_herbs": ["Draksha (Grapes/Raisins)", "Musta (Nagarmotha)", "Chandan (Sandalwood)", "Ushira (Vetiver)"],
+    "diet_recommendations": "Drink water frequently in small sips. Eat water-rich fruits. Include electrolyte drinks. Avoid caffeine and alcohol.",
+    "lifestyle_recommendations": "Drink water before feeling thirsty. Carry water bottle always. Avoid excessive sun exposure. Rest in cool place."
+  }
+]
