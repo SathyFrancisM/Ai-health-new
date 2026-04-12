@@ -1,4 +1,7 @@
+import sys
 import os
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "vendor_lib"))
+
 import shutil
 import base64
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
