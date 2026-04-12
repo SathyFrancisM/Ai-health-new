@@ -173,3 +173,5 @@ server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Services: auth, ai, emergency, rag, booking, consultation, pharmacy`);
 });
+
+
