@@ -29,7 +29,7 @@ export function HealthProfileForm({ onSubmit }: { onSubmit: (data: any) => void 
     >
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gradient">Your Health Profile</h2>
-        <p className="text-slate-500 mt-2">Help us personalize your wellness experience</p>
+        <p className="text-slate-500 dark:text-slate-400 mt-2">Help us personalize your wellness experience</p>
       </div>
 
       <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={(e) => { e.preventDefault(); onSubmit(formData); }}>

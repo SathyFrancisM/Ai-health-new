@@ -14,6 +14,7 @@ import { ConsultationRoom } from "@/components/portals/ConsultationRoom"
 import { PharmacyPortal } from "@/components/portals/PharmacyPortal"
 import { OrderTracker } from "@/components/portals/OrderTracker"
 import { Navbar } from "@/components/layout/Navbar"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import { Heart, ShieldCheck, Activity, Stethoscope, ArrowLeft, MapPin, Pill, Package, CalendarPlus } from "lucide-react"
 
 export default function Home() {
@@ -138,14 +139,19 @@ ${summary || "No specific conversation summary available"}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute top-8 left-8 flex items-center gap-2 z-50 text-slate-800"
+          className="absolute top-8 left-0 right-0 px-8 flex items-center justify-between z-50 pointer-events-none"
         >
-          <div className="bg-gradient-premium p-2 rounded-xl shadow-lg shadow-teal-600/20 cursor-pointer" onClick={() => setView("dashboard")}>
-            <Heart className="text-white h-6 w-6" />
+          <div className="flex items-center gap-2 pointer-events-auto">
+            <div className="bg-gradient-premium p-2 rounded-xl shadow-lg shadow-teal-600/20 cursor-pointer" onClick={() => setView("dashboard")}>
+              <Heart className="text-white h-6 w-6" />
+            </div>
+            <span className="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100 cursor-pointer" onClick={() => setView("dashboard")}>
+              Medi<span className="text-teal-600 dark:text-teal-400">Guide</span>
+            </span>
           </div>
-          <span className="text-2xl font-bold tracking-tight text-slate-800 cursor-pointer" onClick={() => setView("dashboard")}>
-            Medi<span className="text-teal-600">Guide</span>
-          </span>
+          <div className="pointer-events-auto">
+            <ThemeToggle />
+          </div>
         </motion.div>
       )}
 
@@ -181,8 +187,8 @@ ${summary || "No specific conversation summary available"}
             className="w-full max-w-6xl flex flex-col items-center mt-12 pb-16"
           >
             <div className="text-center mb-10 w-full">
-               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">Hello, <span className="text-gradient truncate inline-block max-w-[10em] align-bottom">{user?.name || "Advait"}</span></h1>
-               <p className="text-slate-500 text-lg">
+               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">Hello, <span className="text-gradient truncate inline-block max-w-[10em] align-bottom">{user?.name || "Advait"}</span></h1>
+               <p className="text-slate-500 dark:text-slate-400 text-lg">
                  {user?.role === 'Doctor' ? "Doctor Dashboard - Manage your appointments." : 
                   user?.role === 'Hospital' ? "Hospital Reception - Manage incoming reports." : 
                   "Your complete digital healthcare companion."}
@@ -214,19 +220,19 @@ ${summary || "No specific conversation summary available"}
                  </div>
                  
                  {/* Quick Actions Card */}
-                 <div className="glass p-6 rounded-3xl flex flex-col justify-between border border-purple-100">
+                 <div className="glass p-6 rounded-3xl flex flex-col justify-between border border-purple-100 dark:border-purple-900/40">
                     <div className="space-y-3 w-full">
-                      <button onClick={() => setView("orders")} className="w-full flex items-center justify-between p-3 bg-white hover:bg-slate-50 border border-slate-100 rounded-xl transition-colors">
-                        <span className="text-sm font-bold text-slate-700 flex items-center gap-2"><Package className="w-4 h-4 text-purple-500" /> My Orders</span>
-                        <span className="text-slate-300 text-xs">&rarr;</span>
+                      <button onClick={() => setView("orders")} className="w-full flex items-center justify-between p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 rounded-xl transition-colors">
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2"><Package className="w-4 h-4 text-purple-500" /> My Orders</span>
+                        <span className="text-slate-300 dark:text-slate-500 text-xs">&rarr;</span>
                       </button>
-                      <button onClick={() => setView("doctors")} className="w-full flex items-center justify-between p-3 bg-white hover:bg-slate-50 border border-slate-100 rounded-xl transition-colors">
-                        <span className="text-sm font-bold text-slate-700 flex items-center gap-2"><Stethoscope className="w-4 h-4 text-cyan-500" /> Directory</span>
-                        <span className="text-slate-300 text-xs">&rarr;</span>
+                      <button onClick={() => setView("doctors")} className="w-full flex items-center justify-between p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 rounded-xl transition-colors">
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2"><Stethoscope className="w-4 h-4 text-cyan-500" /> Directory</span>
+                        <span className="text-slate-300 dark:text-slate-500 text-xs">&rarr;</span>
                       </button>
-                      <button onClick={() => setView("hospitals")} className="w-full flex items-center justify-between p-3 bg-white hover:bg-slate-50 border border-slate-100 rounded-xl transition-colors">
-                        <span className="text-sm font-bold text-slate-700 flex items-center gap-2"><MapPin className="w-4 h-4 text-orange-500" /> ERP Map</span>
-                        <span className="text-slate-300 text-xs">&rarr;</span>
+                      <button onClick={() => setView("hospitals")} className="w-full flex items-center justify-between p-3 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700 rounded-xl transition-colors">
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2"><MapPin className="w-4 h-4 text-orange-500" /> ERP Map</span>
+                        <span className="text-slate-300 dark:text-slate-500 text-xs">&rarr;</span>
                       </button>
                     </div>
                  </div>
@@ -244,9 +250,9 @@ ${summary || "No specific conversation summary available"}
 
             {(user?.role === 'Doctor' || user?.role === 'Hospital') && (
               <div className="w-full px-4 max-w-4xl">
-                 <div className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100">
-                    <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                       <Stethoscope className="text-teal-500" /> Appointments & Consultations
+                 <div className="bg-white dark:bg-slate-800/90 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700">
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-6 flex items-center gap-2">
+                       <Stethoscope className="text-teal-500 dark:text-teal-400" /> Appointments & Consultations
                     </h3>
                     <ReceiptList user={user} />
                  </div>
@@ -333,9 +339,9 @@ ${summary || "No specific conversation summary available"}
       </AnimatePresence>
 
       {/* Footer Info */}
-      <div className="fixed bottom-4 right-4 text-slate-400 text-xs flex gap-4 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-100 shadow-sm z-40">
+      <div className="fixed bottom-4 right-4 text-slate-400 dark:text-slate-500 text-xs flex gap-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-100 dark:border-slate-800 shadow-sm z-40">
         <span>© 2026 MediGuide AI</span>
-        <span className="flex items-center gap-1"><ShieldCheck className="h-3 w-3 text-teal-500" /> AES-256</span>
+        <span className="flex items-center gap-1"><ShieldCheck className="h-3 w-3 text-teal-500 dark:text-teal-400" /> AES-256</span>
       </div>
     </main>
   )

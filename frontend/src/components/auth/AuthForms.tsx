@@ -97,7 +97,7 @@ export function LoginForm({ onToggle, onLocationDetect, onGpsDetect, onLogin }: 
 
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gradient">Welcome Back</h2>
-        <p className="text-slate-500 mt-2">Sign in to your health assistant</p>
+        <p className="text-slate-500 dark:text-slate-400 mt-2">Sign in to your health assistant</p>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -138,7 +138,7 @@ export function LoginForm({ onToggle, onLocationDetect, onGpsDetect, onLogin }: 
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-slate-500">
+        <p className="text-slate-500 dark:text-slate-400">
           Don't have an account?{" "}
           <button onClick={onToggle} className="text-teal-600 font-bold hover:underline">
             Sign Up
@@ -171,7 +171,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
     >
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gradient">Create Account</h2>
-        <p className="text-slate-500 mt-2">Start your wellness journey</p>
+        <p className="text-slate-500 dark:text-slate-400 mt-2">Start your wellness journey</p>
       </div>
 
       <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); onNext(formData); }}>
@@ -257,7 +257,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-slate-500">
+        <p className="text-slate-500 dark:text-slate-400">
           Already have an account?{" "}
           <button onClick={onToggle} className="text-teal-600 font-bold hover:underline">
             Sign In
