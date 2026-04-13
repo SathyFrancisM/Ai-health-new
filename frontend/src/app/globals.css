@@ -5,7 +5,7 @@
   --color-foreground: var(--foreground);
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+@variant dark (&:is(.dark *));
 
 :root {
   --background: #f0fdfa; /* Mint white */
