@@ -5,6 +5,8 @@
   --color-foreground: var(--foreground);
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f0fdfa; /* Mint white */
   --foreground: #111827;
@@ -17,7 +19,7 @@
   --border: #e5e7eb;
 }
 
-[data-theme='dark'] {
+.dark {
   --background: #020617;
   --foreground: #f8fafc;
   --primary: #14b8a6;
