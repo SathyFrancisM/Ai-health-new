@@ -114,7 +114,7 @@ export function LoginForm({ onToggle, onLocationDetect, onGpsDetect, onLogin }: 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         <div className="relative">
@@ -125,7 +125,7 @@ export function LoginForm({ onToggle, onLocationDetect, onGpsDetect, onLogin }: 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         <button 
@@ -184,7 +184,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         <div className="relative">
@@ -196,7 +196,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         <div className="relative">
@@ -208,7 +208,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
             value={formData.whatsappNumber}
             onChange={handleChange}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         {formData.email.includes('.doctor@') && (
@@ -222,7 +222,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
                 value={formData.specialty}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
               />
             </div>
             <div className="relative">
@@ -234,7 +234,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
                 value={formData.fees}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
               />
             </div>
           </>
@@ -248,7 +248,7 @@ export function SignUpForm({ onToggle, onNext }: { onToggle: () => void, onNext:
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all bg-white/50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
           />
         </div>
         <button type="submit" className="w-full bg-gradient-premium text-white py-3 rounded-xl font-semibold shadow-lg shadow-teal-500/20 hover:scale-[1.02] transition-transform">

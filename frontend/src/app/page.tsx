@@ -125,7 +125,7 @@ ${summary || "No specific conversation summary available"}
   const isAuthNavView = view !== "login" && view !== "signup" && view !== "onboarding";
 
   return (
-    <main className={`min-h-screen flex flex-col ${isAuthNavView ? 'pt-28 pb-16 items-center p-4' : 'items-center justify-center p-4'} relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50`}>
+    <main className={`min-h-screen flex flex-col ${isAuthNavView ? 'pt-28 pb-16 items-center p-4' : 'items-center justify-center p-4'} relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-cyan-950`}>
       
       <Navbar view={view} setView={setView} user={user} onLogout={handleLogout} />
 
