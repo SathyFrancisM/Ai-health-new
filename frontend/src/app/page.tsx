@@ -13,6 +13,7 @@ import { BookingPortal } from "@/components/portals/BookingPortal"
 import { ConsultationRoom } from "@/components/portals/ConsultationRoom"
 import { PharmacyPortal } from "@/components/portals/PharmacyPortal"
 import { OrderTracker } from "@/components/portals/OrderTracker"
+import { Navbar } from "@/components/layout/Navbar"
 import { Heart, ShieldCheck, Activity, Stethoscope, ArrowLeft, MapPin, Pill, Package, CalendarPlus } from "lucide-react"
 
 export default function Home() {
@@ -115,26 +116,38 @@ ${summary || "No specific conversation summary available"}
     setView("video_consultation");
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('token');
+    setView("login");
+  };
+
+  const isAuthNavView = view !== "login" && view !== "signup" && view !== "onboarding";
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50">
+    <main className={`min-h-screen flex flex-col ${isAuthNavView ? 'pt-28 pb-16 items-center p-4' : 'items-center justify-center p-4'} relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50`}>
       
+      <Navbar view={view} setView={setView} user={user} onLogout={handleLogout} />
+
       {/* Dynamic Background Elements */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-200/20 blur-[120px] rounded-full animate-float pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-200/20 blur-[120px] rounded-full animate-float [animation-delay:2s] pointer-events-none" />
 
-      {/* Header / Logo */}
-      <motion.div 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute top-8 left-8 flex items-center gap-2 z-50 text-slate-800"
-      >
-        <div className="bg-gradient-premium p-2 rounded-xl shadow-lg shadow-teal-600/20 cursor-pointer" onClick={() => setView("dashboard")}>
-          <Heart className="text-white h-6 w-6" />
-        </div>
-        <span className="text-2xl font-bold tracking-tight text-slate-800 cursor-pointer" onClick={() => setView("dashboard")}>
-          Medi<span className="text-teal-600">Guide</span>
-        </span>
-      </motion.div>
+      {/* Header / Logo - Only visible on public views */}
+      {!isAuthNavView && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-8 left-8 flex items-center gap-2 z-50 text-slate-800"
+        >
+          <div className="bg-gradient-premium p-2 rounded-xl shadow-lg shadow-teal-600/20 cursor-pointer" onClick={() => setView("dashboard")}>
+            <Heart className="text-white h-6 w-6" />
+          </div>
+          <span className="text-2xl font-bold tracking-tight text-slate-800 cursor-pointer" onClick={() => setView("dashboard")}>
+            Medi<span className="text-teal-600">Guide</span>
+          </span>
+        </motion.div>
+      )}
 
       <AnimatePresence mode="wait">
         {view === "login" && (
