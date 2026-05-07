@@ -27,9 +27,13 @@ async function fetchNearbyHospitalsOSM(lat, lng, radiusKm = 5) {
   `;
 
   try {
-    const response = await axios.post('https://overpass-api.de/api/interpreter', query, {
-      headers: { 'Content-Type': 'text/plain' },
-      timeout: 10000 // 10s timeout so we don't block forever
+    const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query.trim())}`;
+    const response = await axios.get(url, {
+      timeout: 10000,
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'MediGuide-App/1.0'
+      }
     });
     
     const elements = response.data.elements || [];
@@ -188,7 +192,7 @@ async function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
           availableSlots: []
         });
         await newDoc.save();
-        generatedDoctors.push(newDoc.toObject());
+        generatedDoctors.push({ ...newDoc.toObject(), id: newDoc._id.toString() });
       }
       
       doctors = generatedDoctors;

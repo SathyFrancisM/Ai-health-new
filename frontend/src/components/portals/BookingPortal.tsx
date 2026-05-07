@@ -112,8 +112,8 @@ export function BookingPortal({ user, gpsCoords, onBack, onConsultation }: Booki
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: user?.id,
-          doctorId: selectedDoctor.id,
+          userId: user?.id || user?._id,
+          doctorId: selectedDoctor.id || selectedDoctor._id,
           date: selectedDate,
           timeSlot: selectedSlot.time,
           type: bookingType,
