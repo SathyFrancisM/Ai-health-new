@@ -11,10 +11,10 @@ const fs = require('fs');
  * Search medicines
  * Query: ?search=&category=&page=&limit=
  */
-exports.getMedicines = (req, res) => {
+exports.getMedicines = async (req, res) => {
   try {
     const { search, category, page, limit } = req.query;
-    const result = pharmacyService.searchMedicines({ search, category, page, limit });
+    const result = await pharmacyService.searchMedicines({ search, category, page, limit });
     res.json(result);
   } catch (err) {
     console.error('[Pharmacy Controller] getMedicines error:', err.message);
@@ -26,9 +26,9 @@ exports.getMedicines = (req, res) => {
  * GET /api/pharmacy/medicines/:id
  * Get medicine details
  */
-exports.getMedicineById = (req, res) => {
+exports.getMedicineById = async (req, res) => {
   try {
-    const medicine = pharmacyService.getMedicineById(req.params.id);
+    const medicine = await pharmacyService.getMedicineById(req.params.id);
     if (!medicine) {
       return res.status(404).json({ error: 'Medicine not found' });
     }
@@ -44,14 +44,14 @@ exports.getMedicineById = (req, res) => {
  * Check stock availability
  * Body: { medicineId, quantity }
  */
-exports.checkStock = (req, res) => {
+exports.checkStock = async (req, res) => {
   try {
     const { medicineId, quantity } = req.body;
     if (!medicineId) {
       return res.status(400).json({ error: 'medicineId is required' });
     }
 
-    const result = pharmacyService.checkStock(medicineId, quantity || 1);
+    const result = await pharmacyService.checkStock(medicineId, quantity || 1);
     if (result.error) {
       return res.status(404).json({ error: result.error });
     }
@@ -68,7 +68,7 @@ exports.checkStock = (req, res) => {
  * Place an order
  * Body: { userId, items: [{ medicineId, quantity }], shippingAddress, prescriptionUrl? }
  */
-exports.placeOrder = (req, res) => {
+exports.placeOrder = async (req, res) => {
   try {
     const { userId, items, shippingAddress, prescriptionUrl } = req.body;
 
@@ -80,7 +80,7 @@ exports.placeOrder = (req, res) => {
       return res.status(400).json({ error: 'Order must contain at least one item' });
     }
 
-    const result = pharmacyService.placeOrder({
+    const result = await pharmacyService.placeOrder({
       userId, items, shippingAddress, prescriptionUrl
     });
 
@@ -101,14 +101,14 @@ exports.placeOrder = (req, res) => {
  * Get user order history
  * Query: ?userId=
  */
-exports.getOrders = (req, res) => {
+exports.getOrders = async (req, res) => {
   try {
     const userId = req.query.userId;
     if (!userId) {
       return res.status(400).json({ error: 'userId is required' });
     }
 
-    const orders = pharmacyService.getUserOrders(userId);
+    const orders = await pharmacyService.getUserOrders(userId);
     res.json({ data: orders, total: orders.length });
   } catch (err) {
     console.error('[Pharmacy Controller] getOrders error:', err.message);
@@ -120,9 +120,9 @@ exports.getOrders = (req, res) => {
  * GET /api/pharmacy/orders/:id
  * Get order details
  */
-exports.getOrderById = (req, res) => {
+exports.getOrderById = async (req, res) => {
   try {
-    const order = pharmacyService.getOrderById(req.params.id);
+    const order = await pharmacyService.getOrderById(req.params.id);
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
     }
@@ -138,14 +138,14 @@ exports.getOrderById = (req, res) => {
  * Update order status
  * Body: { status }
  */
-exports.updateOrderStatus = (req, res) => {
+exports.updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
     if (!status) {
       return res.status(400).json({ error: 'status is required' });
     }
 
-    const result = pharmacyService.updateOrderStatus(req.params.id, status);
+    const result = await pharmacyService.updateOrderStatus(req.params.id, status);
     if (result.error) {
       return res.status(400).json({ error: result.error });
     }

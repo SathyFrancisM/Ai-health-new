@@ -90,9 +90,7 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mediguide'
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => {
-    console.error('MongoDB connection error:', err.message);
-    process.env.IS_DEMO_MODE = 'true';
-    console.log('Running in DEMO MODE (without MongoDB)');
+    console.error('MongoDB connection error. Please ensure MongoDB is running locally:', err.message);
   });
 
 // ============================================================

@@ -2,30 +2,13 @@
  * Booking Service — Concurrency-safe appointment booking logic
  * 
  * Handles slot management, availability checks, and atomic booking
- * operations to prevent double-booking. Supports both demo mode
- * (in-memory) and MongoDB mode.
+ * operations to prevent double-booking. Supports MongoDB mode.
  */
 
-const { getSeedHospitals, getSeedDoctors, generateSlots } = require('../data/seed_data');
-
-// ============================================================
-// IN-MEMORY STORE (Demo Mode)
-// ============================================================
-let demoHospitals = null;
-let demoDoctors = null;
-let demoBookings = [];
-let bookingCounter = 0;
-
-function initDemoData() {
-  if (!demoHospitals) {
-    demoHospitals = getSeedHospitals();
-    demoDoctors = getSeedDoctors();
-    console.log(`[Booking Service] Demo data initialized: ${demoHospitals.length} hospitals, ${demoDoctors.length} doctors`);
-  }
-}
-
-// Initialize on load
-initDemoData();
+const Hospital = require('../models/Hospital');
+const Doctor = require('../models/Doctor');
+const Booking = require('../models/Booking');
+const mongoose = require('mongoose');
 
 // ============================================================
 // HAVERSINE DISTANCE FORMULA
@@ -51,39 +34,43 @@ function haversineKm(lat1, lng1, lat2, lng2) {
 /**
  * Get all hospitals, optionally filtered and sorted by distance
  */
-function getHospitals({ search, specialty, lat, lng } = {}) {
-  initDemoData();
-  let hospitals = [...demoHospitals];
+async function getHospitals({ search, specialty, lat, lng } = {}) {
+  let query = {};
 
-  // Filter by search term
   if (search) {
-    const s = search.toLowerCase();
-    hospitals = hospitals.filter(h =>
-      h.name.toLowerCase().includes(s) ||
-      h.location.toLowerCase().includes(s) ||
-      (h.departments && h.departments.some(d => d.toLowerCase().includes(s)))
-    );
+    const s = new RegExp(search, 'i');
+    query.$or = [
+      { name: s },
+      { location: s },
+      { departments: s }
+    ];
   }
 
-  // Filter by specialty
   if (specialty) {
-    const sp = specialty.toLowerCase();
-    hospitals = hospitals.filter(h =>
-      h.specialty.toLowerCase().includes(sp) ||
-      (h.departments && h.departments.some(d => d.toLowerCase().includes(sp)))
-    );
+    const sp = new RegExp(specialty, 'i');
+    query.$or = [
+      ...(query.$or || []),
+      { specialty: sp },
+      { departments: sp }
+    ];
   }
 
-  // Sort by distance if GPS provided
+  let hospitals = await Hospital.find(query).lean();
+
   if (lat && lng) {
     const userLat = parseFloat(lat);
     const userLng = parseFloat(lng);
     if (!isNaN(userLat) && !isNaN(userLng)) {
       hospitals = hospitals.map(h => ({
         ...h,
+        id: h._id.toString(),
         distanceKm: haversineKm(userLat, userLng, h.lat, h.lng)
       })).sort((a, b) => a.distanceKm - b.distanceKm);
+    } else {
+      hospitals = hospitals.map(h => ({...h, id: h._id.toString()}));
     }
+  } else {
+    hospitals = hospitals.map(h => ({...h, id: h._id.toString()}));
   }
 
   return hospitals;
@@ -96,26 +83,26 @@ function getHospitals({ search, specialty, lat, lng } = {}) {
 /**
  * Get doctors, optionally filtered by hospital, specialty, and sorted by distance
  */
-function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
-  initDemoData();
-  let doctors = [...demoDoctors];
-
+async function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
+  let query = {};
+  
   if (hospitalId) {
-    doctors = doctors.filter(d => d.hospitalId === hospitalId);
+    query.hospitalId = hospitalId;
   }
 
   if (specialty) {
-    const sp = specialty.toLowerCase();
-    doctors = doctors.filter(d => d.specialty.toLowerCase().includes(sp));
+    query.specialty = new RegExp(specialty, 'i');
   }
 
   if (search) {
-    const s = search.toLowerCase();
-    doctors = doctors.filter(d =>
-      d.name.toLowerCase().includes(s) ||
-      d.specialty.toLowerCase().includes(s)
-    );
+    const s = new RegExp(search, 'i');
+    query.$or = [
+      { name: s },
+      { specialty: s }
+    ];
   }
+
+  let doctors = await Doctor.find(query).lean();
 
   if (lat && lng) {
     const userLat = parseFloat(lat);
@@ -123,9 +110,14 @@ function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
     if (!isNaN(userLat) && !isNaN(userLng)) {
       doctors = doctors.map(d => ({
         ...d,
+        id: d._id.toString(),
         distanceKm: haversineKm(userLat, userLng, d.lat || 0, d.lng || 0)
       })).sort((a, b) => a.distanceKm - b.distanceKm);
+    } else {
+      doctors = doctors.map(d => ({...d, id: d._id.toString()}));
     }
+  } else {
+    doctors = doctors.map(d => ({...d, id: d._id.toString()}));
   }
 
   return doctors;
@@ -138,21 +130,18 @@ function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
 /**
  * Get available slots for a doctor on a specific date
  */
-function getAvailableSlots(doctorId, date) {
-  initDemoData();
-  const doctor = demoDoctors.find(d => d.id === doctorId);
+async function getAvailableSlots(doctorId, date) {
+  const doctor = await Doctor.findById(doctorId).lean();
   if (!doctor) {
     return { error: 'Doctor not found', slots: [] };
   }
 
   let slots = doctor.availableSlots || [];
 
-  // Filter by date if provided
   if (date) {
     slots = slots.filter(s => s.date === date);
   }
 
-  // Only return unbooked slots
   const available = slots.filter(s => !s.isBooked);
   const booked = slots.filter(s => s.isBooked);
 
@@ -164,7 +153,7 @@ function getAvailableSlots(doctorId, date) {
     availableCount: available.length,
     bookedCount: booked.length,
     slots: slots.map(s => ({
-      id: s.id,
+      id: s._id ? s._id.toString() : `${doctorId}_${s.date}_${s.time}`,
       date: s.date,
       time: s.time,
       isBooked: s.isBooked
@@ -175,9 +164,8 @@ function getAvailableSlots(doctorId, date) {
 /**
  * Generate fresh slots for a doctor if none exist for a date
  */
-function ensureSlotsExist(doctorId, date) {
-  initDemoData();
-  const doctor = demoDoctors.find(d => d.id === doctorId);
+async function ensureSlotsExist(doctorId, date) {
+  const doctor = await Doctor.findById(doctorId);
   if (!doctor) return false;
 
   const existingSlotsForDate = (doctor.availableSlots || []).filter(s => s.date === date);
@@ -188,7 +176,6 @@ function ensureSlotsExist(doctorId, date) {
       for (let min = 0; min < 60; min += 30) {
         const timeStr = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
         newSlots.push({
-          id: `${doctorId}_${date}_${timeStr}`,
           date,
           time: timeStr,
           isBooked: false,
@@ -197,104 +184,81 @@ function ensureSlotsExist(doctorId, date) {
       }
     }
     doctor.availableSlots = [...(doctor.availableSlots || []), ...newSlots];
+    await doctor.save();
   }
   return true;
 }
 
 // ============================================================
-// BOOKING OPERATIONS (Concurrency-safe for demo mode)
+// BOOKING OPERATIONS 
 // ============================================================
-
-// Simple lock mechanism for demo mode to prevent race conditions
-const bookingLocks = new Map();
 
 /**
  * Book an appointment slot (atomic operation)
  * Prevents double-booking by checking and marking slot in one operation
  */
 async function bookSlot({ userId, doctorId, date, timeSlot, type = 'in-person', patientName, patientPhone, notes }) {
-  initDemoData();
+  // ATOMIC: Find the doctor, match the exact unbooked slot, and set it to booked in one DB query!
+  const updateResult = await Doctor.updateOne(
+    { 
+      _id: doctorId, 
+      availableSlots: { $elemMatch: { date: date, time: timeSlot, isBooked: false } }
+    },
+    { 
+      $set: { 
+        'availableSlots.$.isBooked': true,
+        'availableSlots.$.bookedBy': userId
+      } 
+    }
+  );
 
-  const lockKey = `${doctorId}_${date}_${timeSlot}`;
-  
-  // Simple lock check (for demo mode concurrency handling)
-  if (bookingLocks.has(lockKey)) {
-    return { error: 'This slot is currently being booked by another user. Please try again.' };
+  if (updateResult.modifiedCount === 0) {
+    // Either doctor not found, slot doesn't exist, or already booked
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) return { error: 'Doctor not found' };
+    return { error: 'This slot is already booked or not available. Please choose a different time.' };
   }
 
-  try {
-    // Set lock
-    bookingLocks.set(lockKey, true);
-
-    const doctor = demoDoctors.find(d => d.id === doctorId);
-    if (!doctor) {
-      return { error: 'Doctor not found' };
-    }
-
-    // Ensure slots exist for the date
-    ensureSlotsExist(doctorId, date);
-
-    // Find the specific slot
-    const slotId = `${doctorId}_${date}_${timeSlot}`;
-    const slot = doctor.availableSlots.find(s => s.id === slotId || (s.date === date && s.time === timeSlot));
-
-    if (!slot) {
-      return { error: 'Slot not found' };
-    }
-
-    if (slot.isBooked) {
-      return { error: 'This slot is already booked. Please choose a different time.' };
-    }
-
-    // ATOMIC: Mark slot as booked
-    slot.isBooked = true;
-    slot.bookedBy = userId;
-
-    // Find hospital name
-    const hospital = demoHospitals.find(h => h.id === doctor.hospitalId);
-
-    // Create booking record
-    bookingCounter++;
-    const booking = {
-      id: `booking_${bookingCounter}_${Date.now()}`,
-      userId,
-      doctorId,
-      hospitalId: doctor.hospitalId,
-      doctorName: doctor.name,
-      hospitalName: hospital ? hospital.name : 'Unknown Hospital',
-      date,
-      timeSlot,
-      type,
-      status: 'confirmed',
-      consultationId: null,
-      paymentStatus: 'pending',
-      amount: doctor.fees || 500,
-      patientName: patientName || 'Patient',
-      patientPhone: patientPhone || '',
-      notes: notes || '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-
-    demoBookings.push(booking);
-
-    return { success: true, booking };
-  } finally {
-    // Release lock
-    bookingLocks.delete(lockKey);
+  // Slot was successfully locked and booked.
+  const doctor = await Doctor.findById(doctorId).lean();
+  let hospitalName = 'Unknown Hospital';
+  if (doctor.hospitalId) {
+    const hospital = await Hospital.findById(doctor.hospitalId).lean();
+    if (hospital) hospitalName = hospital.name;
   }
+
+  // Create booking record
+  const booking = new Booking({
+    userId,
+    doctorId,
+    hospitalId: doctor.hospitalId,
+    doctorName: doctor.name,
+    hospitalName,
+    date,
+    timeSlot,
+    type,
+    status: 'confirmed',
+    paymentStatus: 'pending',
+    amount: doctor.fees || 500,
+    patientName: patientName || 'Patient',
+    patientPhone: patientPhone || '',
+    notes: notes || ''
+  });
+
+  await booking.save();
+
+  return { success: true, booking: { ...booking.toObject(), id: booking._id.toString() } };
 }
 
 /**
  * Cancel a booking and release the slot
  */
-function cancelBooking(bookingId, userId) {
-  const bookingIndex = demoBookings.findIndex(b => b.id === bookingId);
-  if (bookingIndex === -1) {
+async function cancelBooking(bookingId, userId) {
+  const booking = await Booking.findById(bookingId);
+  
+  if (!booking) {
     return { error: 'Booking not found' };
   }
-
-  const booking = demoBookings[bookingIndex];
 
   if (booking.userId !== userId) {
     return { error: 'Unauthorized: You can only cancel your own bookings' };
@@ -304,21 +268,24 @@ function cancelBooking(bookingId, userId) {
     return { error: 'Booking is already cancelled' };
   }
 
-  // Release the slot
-  const doctor = demoDoctors.find(d => d.id === booking.doctorId);
-  if (doctor) {
-    const slot = doctor.availableSlots.find(s => 
-      s.date === booking.date && s.time === booking.timeSlot
-    );
-    if (slot) {
-      slot.isBooked = false;
-      slot.bookedBy = null;
+  // Release the slot atomically
+  await Doctor.updateOne(
+    { 
+      _id: booking.doctorId, 
+      availableSlots: { $elemMatch: { date: booking.date, time: booking.timeSlot } }
+    },
+    { 
+      $set: { 
+        'availableSlots.$.isBooked': false,
+        'availableSlots.$.bookedBy': null
+      } 
     }
-  }
+  );
 
   // Update booking status
   booking.status = 'cancelled';
-  booking.updatedAt = new Date().toISOString();
+  booking.updatedAt = new Date();
+  await booking.save();
 
   return { success: true, booking };
 }
@@ -326,17 +293,20 @@ function cancelBooking(bookingId, userId) {
 /**
  * Get all bookings for a user
  */
-function getUserBookings(userId) {
-  return demoBookings
-    .filter(b => b.userId === userId)
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+async function getUserBookings(userId) {
+  const bookings = await Booking.find({ userId }).sort({ createdAt: -1 }).lean();
+  return bookings.map(b => ({ ...b, id: b._id.toString() }));
 }
 
 /**
  * Get a single booking by ID
  */
-function getBookingById(bookingId) {
-  return demoBookings.find(b => b.id === bookingId) || null;
+async function getBookingById(bookingId) {
+  const booking = await Booking.findById(bookingId).lean();
+  if (booking) {
+    booking.id = booking._id.toString();
+  }
+  return booking;
 }
 
 module.exports = {

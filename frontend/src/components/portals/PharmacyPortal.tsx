@@ -124,7 +124,7 @@ export function PharmacyPortal({ user, onBack }: { user: any, onBack: () => void
 
     try {
       const orderData = {
-        userId: user?.id || 'demo_user_id',
+        userId: user?.id,
         items: cart.map(item => ({ medicineId: item.id, quantity: item.quantity })),
         shippingAddress: address,
         prescriptionUrl: prescriptionUrl || null

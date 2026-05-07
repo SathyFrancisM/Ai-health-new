@@ -54,7 +54,7 @@ ${summary || "No specific conversation summary available"}
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          userId: user?.id || 'demo_user_id', 
+          userId: user?.id, 
           type, 
           location: detectedLocation,
           lastConversationSummary: summary || "No summary available" 
@@ -187,7 +187,7 @@ ${summary || "No specific conversation summary available"}
             className="w-full max-w-6xl flex flex-col items-center mt-12 pb-16"
           >
             <div className="text-center mb-10 w-full">
-               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">Hello, <span className="text-gradient truncate inline-block max-w-[10em] align-bottom">{user?.name || "Advait"}</span></h1>
+               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100 mb-4">Hello, <span className="text-gradient truncate inline-block max-w-[10em] align-bottom">{user?.name}</span></h1>
                <p className="text-slate-500 dark:text-slate-400 text-lg">
                  {user?.role === 'Doctor' ? "Doctor Dashboard - Manage your appointments." : 
                   user?.role === 'Hospital' ? "Hospital Reception - Manage incoming reports." : 

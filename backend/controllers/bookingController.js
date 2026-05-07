@@ -12,10 +12,10 @@ const bookingService = require('../services/bookingService');
  * List hospitals with optional filters
  * Query: ?search=&specialty=&lat=&lng=
  */
-exports.getHospitals = (req, res) => {
+exports.getHospitals = async (req, res) => {
   try {
     const { search, specialty, lat, lng } = req.query;
-    const hospitals = bookingService.getHospitals({ search, specialty, lat, lng });
+    const hospitals = await bookingService.getHospitals({ search, specialty, lat, lng });
     res.json({ data: hospitals, total: hospitals.length });
   } catch (err) {
     console.error('[Booking Controller] getHospitals error:', err.message);
@@ -28,10 +28,10 @@ exports.getHospitals = (req, res) => {
  * List doctors with optional filters
  * Query: ?hospitalId=&specialty=&search=&lat=&lng=
  */
-exports.getDoctors = (req, res) => {
+exports.getDoctors = async (req, res) => {
   try {
     const { hospitalId, specialty, search, lat, lng } = req.query;
-    const doctors = bookingService.getDoctors({ hospitalId, specialty, search, lat, lng });
+    const doctors = await bookingService.getDoctors({ hospitalId, specialty, search, lat, lng });
     
     // Don't expose slot details in listing — only count
     const doctorsWithSummary = doctors.map(d => ({
@@ -53,7 +53,7 @@ exports.getDoctors = (req, res) => {
  * Get available slots for a doctor
  * Query: ?doctorId=&date=
  */
-exports.getSlots = (req, res) => {
+exports.getSlots = async (req, res) => {
   try {
     const { doctorId, date } = req.query;
 
@@ -65,9 +65,9 @@ exports.getSlots = (req, res) => {
     const slotDate = date || new Date().toISOString().split('T')[0];
 
     // Ensure slots exist for the requested date
-    bookingService.ensureSlotsExist(doctorId, slotDate);
+    await bookingService.ensureSlotsExist(doctorId, slotDate);
 
-    const result = bookingService.getAvailableSlots(doctorId, slotDate);
+    const result = await bookingService.getAvailableSlots(doctorId, slotDate);
     
     if (result.error) {
       return res.status(404).json({ error: result.error });
@@ -117,7 +117,7 @@ exports.bookAppointment = async (req, res) => {
  * Cancel a booking
  * Query: ?userId= (for authorization)
  */
-exports.cancelBooking = (req, res) => {
+exports.cancelBooking = async (req, res) => {
   try {
     const { bookingId } = req.params;
     const userId = req.query.userId || req.body.userId;
@@ -126,7 +126,7 @@ exports.cancelBooking = (req, res) => {
       return res.status(400).json({ error: 'userId is required' });
     }
 
-    const result = bookingService.cancelBooking(bookingId, userId);
+    const result = await bookingService.cancelBooking(bookingId, userId);
 
     if (result.error) {
       return res.status(400).json({ error: result.error });
@@ -144,7 +144,7 @@ exports.cancelBooking = (req, res) => {
  * Get all bookings for a user
  * Query: ?userId=
  */
-exports.getMyBookings = (req, res) => {
+exports.getMyBookings = async (req, res) => {
   try {
     const userId = req.query.userId;
 
@@ -152,7 +152,7 @@ exports.getMyBookings = (req, res) => {
       return res.status(400).json({ error: 'userId is required' });
     }
 
-    const bookings = bookingService.getUserBookings(userId);
+    const bookings = await bookingService.getUserBookings(userId);
     res.json({ data: bookings, total: bookings.length });
   } catch (err) {
     console.error('[Booking Controller] getMyBookings error:', err.message);
@@ -164,9 +164,9 @@ exports.getMyBookings = (req, res) => {
  * GET /api/booking/:bookingId
  * Get a single booking by ID
  */
-exports.getBooking = (req, res) => {
+exports.getBooking = async (req, res) => {
   try {
-    const booking = bookingService.getBookingById(req.params.bookingId);
+    const booking = await bookingService.getBookingById(req.params.bookingId);
     if (!booking) {
       return res.status(404).json({ error: 'Booking not found' });
     }
