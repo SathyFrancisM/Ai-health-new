@@ -9,6 +9,51 @@ const Hospital = require('../models/Hospital');
 const Doctor = require('../models/Doctor');
 const Booking = require('../models/Booking');
 const mongoose = require('mongoose');
+const axios = require('axios');
+
+async function fetchNearbyHospitalsOSM(lat, lng, radiusKm = 5) {
+  const radiusMeters = radiusKm * 1000;
+  const query = `
+    [out:json];
+    (
+      node["amenity"="hospital"](around:${radiusMeters},${lat},${lng});
+      way["amenity"="hospital"](around:${radiusMeters},${lat},${lng});
+      relation["amenity"="hospital"](around:${radiusMeters},${lat},${lng});
+      node["amenity"="clinic"](around:${radiusMeters},${lat},${lng});
+      way["amenity"="clinic"](around:${radiusMeters},${lat},${lng});
+      relation["amenity"="clinic"](around:${radiusMeters},${lat},${lng});
+    );
+    out center;
+  `;
+
+  try {
+    const response = await axios.post('https://overpass-api.de/api/interpreter', query, {
+      headers: { 'Content-Type': 'text/plain' },
+      timeout: 10000 // 10s timeout so we don't block forever
+    });
+    
+    const elements = response.data.elements || [];
+    
+    return elements.map(el => {
+      const elLat = el.lat || (el.center && el.center.lat) || lat;
+      const elLng = el.lon || (el.center && el.center.lon) || lng;
+      
+      return {
+        name: el.tags?.name || 'Local Healthcare Facility',
+        location: el.tags?.['addr:city'] || el.tags?.['addr:street'] || 'Nearby Location',
+        rating: 4.5,
+        specialty: el.tags?.amenity === 'clinic' ? 'General Clinic' : 'General Hospital',
+        emergency: el.tags?.emergency === 'yes',
+        lat: elLat,
+        lng: elLng,
+        departments: ['General Medicine', 'Emergency']
+      };
+    });
+  } catch (error) {
+    console.error('OSM fetch error:', error.message);
+    return [];
+  }
+}
 
 // ============================================================
 // HAVERSINE DISTANCE FORMULA
@@ -53,6 +98,24 @@ async function getHospitals({ search, specialty, lat, lng } = {}) {
       { specialty: sp },
       { departments: sp }
     ];
+  }
+
+  if (lat && lng) {
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+    
+    // Fetch and upsert real hospitals first before querying our DB
+    if (!isNaN(userLat) && !isNaN(userLng)) {
+      const realHospitals = await fetchNearbyHospitalsOSM(userLat, userLng);
+      for (const rh of realHospitals) {
+        if (rh.name === 'Local Healthcare Facility') continue; // Skip unnamed
+        const existing = await Hospital.findOne({ name: rh.name });
+        if (!existing) {
+          const newHosp = new Hospital(rh);
+          await newHosp.save();
+        }
+      }
+    }
   }
 
   let hospitals = await Hospital.find(query).lean();
@@ -103,6 +166,34 @@ async function getDoctors({ hospitalId, specialty, search, lat, lng } = {}) {
   }
 
   let doctors = await Doctor.find(query).lean();
+
+  // If querying by hospital and no doctors found, auto-generate them!
+  if (hospitalId && doctors.length === 0) {
+    const hospital = await Hospital.findById(hospitalId);
+    if (hospital) {
+      const mockSpecialties = ['General Physician', 'Cardiologist', 'Pediatrician', 'Orthopedic'];
+      const generatedDoctors = [];
+      const numToGenerate = Math.floor(Math.random() * 3) + 2; // 2 to 4 doctors
+      
+      for (let i = 0; i < numToGenerate; i++) {
+        const newDoc = new Doctor({
+          name: `Dr. ${['Smith', 'Patel', 'Kumar', 'Johnson', 'Sharma', 'Reddy', 'Singh'][Math.floor(Math.random() * 7)]} (Generated)`,
+          specialty: mockSpecialties[i % mockSpecialties.length],
+          hospitalId: hospital._id,
+          experience: `${Math.floor(Math.random() * 15) + 2} years`,
+          rating: (Math.random() * 1 + 4).toFixed(1), // 4.0 to 5.0
+          fees: Math.floor(Math.random() * 5) * 100 + 500, // 500 to 900
+          lat: hospital.lat || 0,
+          lng: hospital.lng || 0,
+          availableSlots: []
+        });
+        await newDoc.save();
+        generatedDoctors.push(newDoc.toObject());
+      }
+      
+      doctors = generatedDoctors;
+    }
+  }
 
   if (lat && lng) {
     const userLat = parseFloat(lat);
