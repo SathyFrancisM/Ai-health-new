@@ -116,7 +116,7 @@ exports.getConsultation = async (req, res) => {
       console.log(`[Pipeline] Response translated back to ${detectedLang}`);
     }
 
-    return res.json({ text: finalResponse, remedy: null });
+    return res.json({ text: finalResponse, lang: detectedLang, remedy: null });
 
   } catch (err) {
     console.error('[AI Controller] Error:', err.message);

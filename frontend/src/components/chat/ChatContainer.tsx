@@ -9,6 +9,7 @@ interface Message {
   text: string;
   sender: "user" | "bot";
   timestamp: Date;
+  lang?: string;
 }
 
 export function ChatContainer({ onSpeak, onEmergency, user }: { 
@@ -85,11 +86,12 @@ export function ChatContainer({ onSpeak, onEmergency, user }: {
         id: (Date.now() + 1).toString(), 
         text: data.text, 
         sender: "bot", 
-        timestamp: new Date() 
+        timestamp: new Date(),
+        lang: data.lang || "en"
       };
       setMessages(prev => [...prev, botMsg]);
       
-      if (isTtsEnabled) speakText(botMsg.text);
+      if (isTtsEnabled) speakText(botMsg.text, botMsg.lang);
     } catch (err) {
       console.error(err);
       const errMsg: Message = { 
@@ -104,19 +106,23 @@ export function ChatContainer({ onSpeak, onEmergency, user }: {
     }
   };
 
-  const speakText = (text: string) => {
+  const speakText = (text: string, langCode: string = "en") => {
     const utterance = new SpeechSynthesisUtterance(text);
     
-    // Improve pronunciation for Indian terminology (Ayurveda/Home Remedies)
-    utterance.lang = 'en-IN'; 
+    // Map backend lang code to browser TTS lang code
+    let browserLang = 'en-IN';
+    if (langCode === 'ta') browserLang = 'ta-IN';
+    if (langCode === 'hi') browserLang = 'hi-IN';
+    
+    utterance.lang = browserLang; 
     
     // Attempt to select a clear, localized voice if available
     const voices = window.speechSynthesis.getVoices();
     
-    // Prefer Indian English voice
-    const indianVoice = voices.find(v => v.lang === 'en-IN' || v.lang === 'hi-IN');
-    if (indianVoice) {
-      utterance.voice = indianVoice;
+    // Prefer matching language voice
+    const matchedVoice = voices.find(v => v.lang === browserLang || v.lang.startsWith(langCode));
+    if (matchedVoice) {
+      utterance.voice = matchedVoice;
     }
 
     // Adjust rate for better clarity
@@ -135,8 +141,9 @@ export function ChatContainer({ onSpeak, onEmergency, user }: {
     recognition.continuous = false;
     recognition.interimResults = false;
     
-    // Set recognition language to Indian English to better capture Indian accents and terms
-    recognition.lang = 'en-IN';
+    // Let the browser auto-detect or use the system default language.
+    // Do NOT hardcode 'en-IN' here so it can pick up Hindi/Tamil phonetics better.
+    // recognition.lang = 'en-IN';
     
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event: any) => {
